@@ -1,0 +1,45 @@
+version: '3.7'
+
+# same as 
+# docker run -p 80:4000 -v $(pwd):/site bretfisher/jekyll-serve
+
+services:
+  icinga2:
+    hostname: icinga2
+    image: jordan/icinga2:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 78N8661343i0v6A
+      MYSQL_DATABASE: icinga2
+      MYSQL_USER: icinga
+      MYSQL_PASSWORD: EJIoSlMcSloZp2Z
+      ICINGA2_FEATURE_GRAPHITE: 'true'
+      ICINGA2_FEATURE_GRAPHITE_HOST: icinga2
+      ICINGA2_FEATURE_GRAPHITE_PORT: 2003
+      ICINGA2_FEATURE_GRAPHITE_URL: http://icinga2
+      ICINGA2_FEATURE_DIRECTOR: 'true'
+      DIRECTOR_KICKSTART: 'true'
+      ICINGAWEB2_ADMIN_USER: daltonstrauss
+      ICINGAWEB2_ADMIN_PASS: admin
+      ICINGA2_USER_FULLNAME: dalton
+      APACHE2_HTTP: REDIRECT
+    volumes:
+      - ./apachessl:/etc/apache2/ssl:ro
+      - ./icingaconfig:/etc/icinga2
+      - ./icingaweb:/etc/icingaweb2
+      - ./mysql-data:/var/lib/mysql
+    ports:
+      - '80:80'
+      - '443:443'
+      - '2003:2003'
+   
+volumes:
+  mysql-data:
+  apachessl:
+  locale:
+  smtpconfig:
+  icingaconfig:
+  icingaweb:
+  mysql-date:
+  
+
+
